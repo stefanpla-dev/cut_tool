@@ -4,12 +4,12 @@ import os
 ## imports os to create and remove the test file sample_test.tsv
 
 def test_extract_second_field_with_tab():
-    sample_content = "f0\tf1\n0\t1\n5\t6\n10\t11\n15\t16\n20\t21\n"
-    sample_file = "tests/sample_test.tsv"
+    sample_content = 'f0\tf1\n0\t1\n5\t6\n10\t11\n15\t16\n20\t21\n'
+    sample_file = 'tests/sample_test.tsv'
     with open(sample_file, 'w') as file:
         file.write(sample_content)
     
-    expected_output = "f1\n1\n6\n11\n16\n21\n"
+    expected_output = 'f1\n1\n6\n11\n16\n21\n'
 
     result = subprocess.run(
         ['python', 'src/cut.py', '-f', '2', sample_file],
@@ -51,3 +51,45 @@ def test_extract_first_field_with_comma():
     assert result.returncode == 0
 
 ##Similar mechanism to the first test in this file, this time testing the delimiter functionality with a sample csv file.
+
+def test_extract_multiple_fields_with_comma():
+    sample_content = 'f0\tf1\tf2\n0\t1\t2\n5\t6\t7\n10\t11\t12\n15\t16\t17\n20\t21\t22\n'
+    sample_file = 'tests/sample_multiple_fields.tsv'
+    with open(sample_file, 'w') as file:
+        file.write(sample_content)
+
+    expected_output = 'f0\tf1\n0\t1\n5\t6\n10\t11\n15\t16\n20\t21\n'
+
+    result = subprocess.run(
+        ['python', 'src/cut.py', '-f', '1,2', sample_file],
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+        text = True
+    )
+
+    os.remove(sample_file)
+
+    assert result.stdout == expected_output
+    assert result.stderr == ''
+    assert result.returncode == 0
+
+def test_extract_multiple_fields_with_spaces():
+    sample_content = 'f0,f1,f2\n0,1,2\n5,6,7\n10,11,12\n15,16,17\n20,21,22\n'
+    sample_file = 'tests/sample_multiple_fields.csv'
+    with open(sample_file, 'w') as file:
+        file.write(sample_content)
+
+    expected_output = 'f0,f2\n0,2\n5,7\n10,12\n15,17\n20,22\n'
+
+    result = subprocess.run(
+        ['python', 'src/cut.py', '-f', '1 3', '-d', ',', sample_file],
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+        text = True
+    )
+
+    os.remove(sample_file)
+
+    assert result.stdout == expected_output
+    assert result.stderr == ''
+    assert result.returncode == 0
