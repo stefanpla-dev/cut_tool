@@ -4,6 +4,7 @@ import sys
 def parse_arguments():
     parser = argparse.ArgumentParser(description = 'A simple implementation of the Unix cut command.')
     parser.add_argument('-f', '--fields', required = True, help = 'Field number to extract(e.g., 2 for the second field).')
+    parser.add_argument('-d', '--delimiter', default = '\t', help = 'Delimiter to use between fields (default is tab).')
     parser.add_argument('filename', help = 'Input file to process.')
     return parser.parse_args()
 ## Initializes argument parser and adds a few arguments: a required field, and filename. Parses command-line arguments and returns them as an object to be used elsewhere in the program.
@@ -37,9 +38,9 @@ def main():
         print('Error: Field number must be a positive integer.', file = sys.stderr)
         sys.exit(1)
         
-    extract_field(args.filename, field_number)
+    extract_field(args.filename, field_number, args.delimiter)
 ## Assigns parsed command-line arugments returned by parse_arguments to the variable args.
 ## Converts the fields argument from a string to an integer. If this winds up being an invalid integer, a ValueError is raised.
-## Invokes the extract_field function with the provided filename and validated field_number.
+## Invokes the extract_field function with the provided filename, validated field_number, and delimiter if one is provided (default is tab).
 if __name__ == '__main__':
     main()
