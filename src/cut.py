@@ -13,16 +13,8 @@ def extract_field(filename, field_numbers, delimiter = '\t'):
     try:
         with open (filename, 'r') as file:
             for line in file:
-                parts = line.rstrip('\n').split(delimiter)
-
-                selected_fields = []
-                for field_number in field_numbers:
-                    if field_number <= len(parts):
-                        selected_fields.append(parts[field_number - 1])
-                    else:
-                        selected_fields.append('')
-
-                print(delimiter.join(selected_fields))
+                parts = line.split(delimiter)
+                print(delimiter.join(parts[field_number - 1] for field_number in field_numbers if field_number <= len(parts)))
 
     except FileNotFoundError:
         print(f'Error: File "{filename}" not found', file = sys.stderr)

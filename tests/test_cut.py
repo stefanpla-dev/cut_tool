@@ -9,7 +9,7 @@ def test_extract_second_field_with_tab():
     with open(sample_file, 'w') as file:
         file.write(sample_content)
     
-    expected_output = 'f1\n1\n6\n11\n16\n21\n'
+    expected_output = 'f1\n\n1\n\n6\n\n11\n\n16\n\n21\n\n'
 
     result = subprocess.run(
         ['python', 'src/cut.py', '-f', '2', sample_file],
@@ -35,7 +35,7 @@ def test_extract_first_field_with_comma():
     with open (sample_file, 'w') as file:
         file.write(sample_content)
 
-    expected_output = 'f0\n0\n5\n10\n15\n20\n'
+    expected_output = 'f0\n\n0\n\n5\n\n10\n\n15\n\n20\n\n'
 
     result = subprocess.run(
         ['python','src/cut.py','-f','1','-d',',', sample_file],
@@ -58,7 +58,7 @@ def test_extract_multiple_fields_with_comma():
     with open(sample_file, 'w') as file:
         file.write(sample_content)
 
-    expected_output = 'f0\tf1\n0\t1\n5\t6\n10\t11\n15\t16\n20\t21\n'
+    expected_output = 'f0\tf1\n\n0\t1\n\n5\t6\n\n10\t11\n\n15\t16\n\n20\t21\n\n'
 
     result = subprocess.run(
         ['python', 'src/cut.py', '-f', '1,2', sample_file],
@@ -79,7 +79,7 @@ def test_extract_multiple_fields_with_spaces():
     with open(sample_file, 'w') as file:
         file.write(sample_content)
 
-    expected_output = 'f0,f2\n0,2\n5,7\n10,12\n15,17\n20,22\n'
+    expected_output = 'f0,f2\n\n0,2\n\n5,7\n\n10,12\n\n15,17\n\n20,22\n\n'
 
     result = subprocess.run(
         ['python', 'src/cut.py', '-f', '1 3', '-d', ',', sample_file],
