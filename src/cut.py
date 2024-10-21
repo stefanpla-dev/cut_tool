@@ -15,12 +15,7 @@ def extract_field(filename, field_numbers, delimiter = '\t'):
             for line in file:
                 parts = line.rstrip('\n').split(delimiter)
 
-                selected_fields = []
-                for field_number in field_numbers:
-                    if field_number <= len(parts):
-                        selected_fields.append(parts[field_number - 1])
-                    else:
-                        selected_fields.append('')
+                selected_fields = [parts[field_number - 1] if field_number <= len(parts) else '' for field_number in field_numbers]
 
                 print(delimiter.join(selected_fields))
 
@@ -37,10 +32,7 @@ def extract_field(filename, field_numbers, delimiter = '\t'):
 def main():
     args = parse_arguments()
     try:
-        field_numbers = [int(f) for f in args.fields.replace(',',' ').split()]
-
-        if any(field_number < 1 for field_number in field_numbers):
-            raise ValueError
+        field_numbers = [int(f) for f in args.fields.replace(',', ' ').split() if int(f) > 0]
     except ValueError:
         print('Error: Fields must be a positive integer or a list of positive integers.', file = sys.stderr)
         sys.exit(1)
