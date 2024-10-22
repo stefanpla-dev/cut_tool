@@ -26,7 +26,7 @@ def extract_field(filename, field_numbers, delimiter = '\t'):
         print(f'An error occurred: {e}', file = sys.stderr)
         sys.exit(1)
 ## Method takes a name and path of a file to process, the specific field number(s) to extract from each line, and a character used to separate fields. Defaults to a tab (\t).
-## Opens the file in read mode, iterates over each line in the file, removes any trailing newline characters from the line and splits the line into a list of fields based on the specified delimiter. Come back to this later - can likely be optimized. For now it is ok.
+## Opens the file in read mode, iterates over each line in the file, removes any trailing newline characters from the line and splits the line into a list of fields based on the specified delimiter.
 ## Checks if the specified field number exists in the current line (fields are 1 indexed, pythonic lists are 0 indexed hence field_number -1). Prints desired field(s) to the standard output. If specified field number(s) doesn't(don't) exist, prints an empty string.
 
 def main():

@@ -8,7 +8,7 @@ This tool allows you to extract specific fields from each line of a file based o
 
 - Specify delimiter
 - Select fields by number
-- Handle large files efficiently
+- Prints desired fields to the standard output.
 
 ## Usage
 
